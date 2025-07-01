@@ -4,7 +4,12 @@ const posts = require("../data/postsData.js")
 
 //index
 router.get("/", (req,res) =>{
-    res.json(posts);
+    let myRes = posts;
+    const {tag} = req.query;
+    if (tag) {
+        myRes = posts.filter(post => post.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
+    }
+    res.json(myRes);
 });
 
 //show
