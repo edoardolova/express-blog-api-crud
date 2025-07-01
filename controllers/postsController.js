@@ -9,22 +9,17 @@ function index(req, res){
     res.json(myRes);
 };
 
-
 function show(req, res){
     const id = req.params.id;
     const post = posts.find(post => post.id === Number(id));
-    if(post){
-        return res.json(post);
-    }
-    else{
+    if(!post){
         return res.status(404).json({err: "post not found"});
     }
+    return res.json(post);
 };
-
 
 function store(req, res){
     res.send("aggiungo un nuovo post");
-
 };
 
 function update(req, res){
@@ -40,10 +35,7 @@ function modify(req, res){
 function destroy(req, res){
     const id = Number(req.params.id);
     const post = posts.find(post => post.id === id);
-    if (post) {
-        posts.splice(posts.indexOf(post),1);
-    }
-    else{
+    if (!post) {
         res.status(404);
         return res.json({
             status: 404,
@@ -51,6 +43,7 @@ function destroy(req, res){
             mess: "post not found"
         })
     }
+    posts.splice(posts.indexOf(post),1);
     console.log(posts);
     res.sendStatus(204);
 };
