@@ -55,7 +55,31 @@ function update(req, res){
 
 function modify(req, res){
     const id = req.params.id;
-    res.send(`cambio in parte il post con id: ${id}`);
+    const {title, content, image, tags} = req.body;
+    const post = postsData.find(post => post.id === Number(id));
+    if (!post) {
+        res.status(404);
+        return res.json({
+            err: "not found",
+            mess: "post not found"
+        });
+    };
+    
+    if (title) {
+        post.title = req.body.title;
+    };
+    if (content) {
+        post.content = req.body.content;
+    };
+    if (image){
+        post.image = req.body.image;
+    };
+    if (tags) {
+        post.tags = req.body.tags;
+    };
+
+    console.log(postsData);
+    res.json(post);
 };
 
 function destroy(req, res){
