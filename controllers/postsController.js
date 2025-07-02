@@ -1,10 +1,10 @@
 const postsData = require("../data/postsData.js");
 
 function index(req, res){
-    let myRes = posts;
+    let myRes = postsData;
     const {tag} = req.query;
     if (tag) {
-        myRes = posts.filter(post => post.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
+        myRes = postsData.filter(post => post.tags.some(t => t.toLowerCase() === tag.toLowerCase()));
     }
     res.json(myRes);
 };
@@ -34,7 +34,23 @@ function store(req, res){
 
 function update(req, res){
     const id = req.params.id;
-    res.send(`cambio interamente il post con id: ${id}`);
+    const post = postsData.find(post => post.id === Number(id));
+    if (!post) {
+        res.status(404);
+        return res.json({
+            err: "not found",
+            mess: "post not found"
+        });
+    };
+
+    post.title = req.body.title;
+    post.content = req.body.content;
+    post.image = req.body.image;
+    post.tags = req.body.tags;
+
+    console.log(postsData);
+    res.json(post);
+    
 };
 
 function modify(req, res){
