@@ -3,6 +3,8 @@ const app = express();
 const port = 5500;
 const postsRouter = require("./routers/posts.js");
 
+app.use(express.json());
+app.use("/posts", postsRouter);
 
 
 app.listen(port, ()=>{
@@ -14,5 +16,3 @@ app.use(express.static(`public`));
 app.get("/", (req, res)=>{
     res.send("Benvenuti sul mio blog");
 })
-
-app.use("/posts", postsRouter);

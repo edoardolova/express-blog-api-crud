@@ -1,4 +1,4 @@
-const posts = require("../data/postsData.js");
+const postsData = require("../data/postsData.js");
 
 function index(req, res){
     let myRes = posts;
@@ -19,7 +19,17 @@ function show(req, res){
 };
 
 function store(req, res){
-    res.send("aggiungo un nuovo post");
+    const newId = postsData[postsData.length - 1].id + 1;
+    const newPost = {
+        id: newId,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.body.image,
+        tags: req.body.tags
+    };
+    postsData.push(newPost);
+    console.log(postsData);
+    res.status(201).send(newPost);
 };
 
 function update(req, res){
