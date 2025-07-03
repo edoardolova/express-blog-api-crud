@@ -11,7 +11,9 @@ function index(req, res){
 
 function show(req, res){
     const id = req.params.id;
-    const post = posts.find(post => post.id === Number(id));
+    //simulate internal error 500 posts not defined
+    // const post = posts.find(post => post.id === Number(id));
+    const post = postsData.find(post => post.id === Number(id));
     if(!post){
         return res.status(404).json({err: "post not found"});
     }
